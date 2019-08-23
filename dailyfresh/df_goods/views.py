@@ -56,8 +56,22 @@ def detail(request,id):
         'type':goods.gtype.title,'g':goods,
         'news':news,'id':id,'title':'商品详情',
     }
-    return render(request,'df_goods/detail.html',context)
+    response = render(request,'df_goods/detail.html',context)
 
-
+    #最近浏览
+    goods_ids = request.COOKIES.get('goods_ids','')#获取商品键值对
+    goods_id = '%d'%goods.id
+    if goods_ids != '':
+        goods_ids1 = goods_ids.split(',')#转化为商品列表信息编辑
+        if goods_ids1.count(goods_id)>=1:
+            goods_ids1.remove(goods_id)
+        goods_ids1.insert(0,goods_id)
+        if len(goods_ids1)>=6:
+            del goods_ids1[5]
+        goods_ids = ','.join(goods_ids1)#拼接成字符串
+    else:
+        goods_ids = goods_id
+    response.set_cookie('goods_ids',goods_ids)#写入cookie
+    return response
 
 
