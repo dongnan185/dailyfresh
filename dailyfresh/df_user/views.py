@@ -86,8 +86,11 @@ def info(request):
     goods_ids = request.COOKIES.get('goods_ids','')
     goods_ids1 = goods_ids.split(',')
     goods_list = []
-    for goods_id in goods_ids1:
-        goods_list.append(GoodsInfo.objects.get(id=int(goods_id)))
+    if goods_ids == '':
+        goods_list = []
+    else:
+        for goods_id in goods_ids1:
+            goods_list.append(GoodsInfo.objects.get(id=int(goods_id)))
 
     context ={
         'title':'用户中心','page_name':1,

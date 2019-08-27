@@ -17,9 +17,9 @@
 			<ul class="navlist fl">
 				<li><a href="/">首页</a></li>
 				<li class="interval">|</li>
-				<li><a href="">手机生鲜</a></li>
+				<li><a href="/">手机生鲜</a></li>
 				<li class="interval">|</li>
-				<li><a href="">抽奖</a></li>
+				<li><a href="/">抽奖</a></li>
 			</ul>
 		</div>
 	</div>
@@ -40,7 +40,7 @@
 				<ul>
                     {%for new in news%}
 					<li>
-						<a href="/{{new.id}}/"><img src="/static/{{new.gpic}}"></a>
+						<a href="/{{new.id}}/"><img src="/static/media/{{new.gpic}}"></a>
 						<h4><a href="/{{new.id}}/">{{new.gtitle}}</a></h4>
 						<div class="prize">￥{{new.gprice}}</div>
 					</li>
@@ -50,4 +50,5 @@
 		</div>
         {%block list%}{%endblock list%}
     </div>
+	{%block script%}{%endblock script%}
 {%endblock body%}

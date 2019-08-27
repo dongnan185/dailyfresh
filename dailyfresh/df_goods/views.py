@@ -2,6 +2,7 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from models import *
+from df_cart.models import CartInfo
 
 def index(request):
     #查询各分类的最新4条、最热4条数据
@@ -18,6 +19,8 @@ def index(request):
     type41 = typelist[4].goodsinfo_set.order_by('-gclick')[0:4]
     type5 = typelist[5].goodsinfo_set.order_by('-id')[0:4]
     type51 = typelist[5].goodsinfo_set.order_by('-gclick')[0:4]
+    #购物车数量
+    count = cart_count(request)
     context = {
         'title':'首页','guest_cart':1,
         'type0':type0,'type01':type01,
@@ -26,6 +29,7 @@ def index(request):
         'type3': type3, 'type31': type31,
         'type4': type4, 'type41': type41,
         'type5': type5, 'type51': type51,
+        'count':count,
     }
     return render(request,'df_goods/index.html',context)
 
@@ -52,9 +56,12 @@ def detail(request,id):
     goods.gclick = goods.gclick+1
     goods.save()
     news = goods.gtype.goodsinfo_set.order_by('-id')[0:2]
+    #购物车数量
+    count = cart_count(request)
     context = {
         'type':goods.gtype.title,'g':goods,
-        'news':news,'id':id,'title':'商品详情',
+        'news':news,'id':id,'title':'商品详情','guest_cart':1,
+        'count':count,
     }
     response = render(request,'df_goods/detail.html',context)
 
@@ -74,4 +81,19 @@ def detail(request,id):
     response.set_cookie('goods_ids',goods_ids)#写入cookie
     return response
 
+#购物车数量
+def cart_count(request):
+    if request.session.has_key('user_id'):
+        return CartInfo.objects.filter(user_id=request.session.get('user_id', '')).count()
+    else:
+        return 0
+
+from haystack.views import SearchView
+class MySearchView(SearchView):
+    def extra_context(self):
+        context = super(MySearchView,self).extra_context()
+        context['title'] = '搜索'
+        context['guest_cart'] = 1
+        context['count'] = cart_count(self.request)
+        return context
 

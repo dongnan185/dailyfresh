@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'cb4+ddlud=@1)m!&-k&h%$g^#_fwj!p7agh2=iv*4m52498o*v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,6 +40,9 @@ INSTALLED_APPS = (
     'df_user',
     'df_goods',
     'tinymce',
+    'df_cart',
+    'df_order',
+    'haystack',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -111,10 +114,23 @@ STATICFILES_DIRS = [
     os.path.join('static'),
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'static')
+STATIC_ROOT = '/var/www/dailyfresh/static'
+MEDIA_ROOT = '/var/www/dailyfresh/static/media'
 
 TINYMCE_DEFAULT_CONFIG = {
     'theme': 'advanced',
     'width': 600,
     'height': 400,
 }
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    }
+}
+
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+#HAYSTACK_DEFAULT_OPERATOR = 'OR'
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 18
+

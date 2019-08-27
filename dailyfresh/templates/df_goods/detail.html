@@ -1,18 +1,18 @@
 {%extends 'df_goods/base.html'%}
 {%block head%}
-	<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
 	<script>
 		function add(){
 			num = parseFloat($('.num_show').val());
-			if(num<=1){
-				return;
-			}
 			$('.num_show').val(num+1);
 			$('.num_show').blur();
 		}
 
 		function minus(){
 			num = parseFloat($('.num_show').val());
+			if(num<=1){
+				return;
+			}
 			$('.num_show').val(num-1);
 			$('.num_show').blur();
 		}
@@ -40,7 +40,7 @@
 {%endblock head%}
 {%block detail%}
 	<div class="goods_detail_con clearfix">
-		<div class="goods_detail_pic fl"><img src="/static/{{g.gpic}}"></div>
+		<div class="goods_detail_pic fl"><img src="/static/media/{{g.gpic}}"></div>
 
 		<div class="goods_detail_list fr">
 			<h3>{{g.gtitle}}</h3>
@@ -59,7 +59,7 @@
 			</div>
 			<div class="total">总价：<em id="gtotal">{{g.gprice}}元</em></div>
 			<div class="operate_btn">
-				<a href="javascript:;" class="buy_btn">立即购买</a>
+				<a href="/cart/" class="buy_btn" id="buy_btn">立即购买</a>
 				<a href="javascript:;" class="add_cart" id="add_cart">加入购物车</a>				
 			</div>
 		</div>
@@ -77,6 +77,62 @@
 			<div class="tab_content">
 				{{g.gcontent|safe}}
 			</div>
-
 		</div>
+		<div class="add_jump"></div>
+
+	<script type="text/javascript" src="/static/js/jquery-1.12.2.js"></script>
+	<script type="text/javascript">
+		var $add_x = $('#add_cart').offset().top;
+		var $add_y = $('#add_cart').offset().left;
+
+		var $to_x = $('#show_count').offset().top;
+		var $to_y = $('#show_count').offset().left;
+
+		$(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'})
+		$('#add_cart').click(function(){
+			//判断是否登陆
+			if($('.login_btn').text().indexOf('登录')>=0){
+				alert('请先登录后再购买！');
+				location.href = '/user/login/';
+				return;
+			}
+			//动画
+			$(".add_jump").stop().animate({
+				'left': $to_y+7,
+				'top': $to_x+7},
+				"fast", function() {
+					$(".add_jump").fadeOut('fast',function(){
+					});
+			});
+			//异步
+			num = parseInt($('.num_show').val());
+			$.get('/cart/add{{g.id}}_'+num+'/',function(data){
+				$('#show_count').text(data.count);
+			});
+		});
+
+		$('#buy_btn').click(function(){
+			//判断是否登陆
+			if($('.login_btn').text().indexOf('登录')>=0){
+				alert('请先登录后再购买！');
+				location.href = '/user/login/';
+				return;
+			}
+			//动画
+			$(".add_jump").stop().animate({
+				'left': $to_y+7,
+				'top': $to_x+7},
+				"fast", function() {
+					$(".add_jump").fadeOut('fast',function(){
+					});
+			});
+			//异步
+			num = parseInt($('.num_show').val());
+			$.get('/cart/add{{g.id}}_'+num+'/',function(data){
+				$('#show_count').text(data.count);
+			});
+
+
+		});
+	</script>
 {%endblock list%}
