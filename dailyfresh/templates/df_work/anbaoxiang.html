@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>恭贺安保祥达成最强王者！</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/reset.css">
+    <style>
+	.header{
+		height: 60px;
+		background-color: #000;
+		text-align: center;
+		font-size: 30px;
+		line-height: 60px;
+		color: #fff;
+	}
+
+	.main_con{
+		margin:0px auto;
+		height: 1200px;
+		background-color: #000;
+	}
+	.left{
+		float: left;
+		height: 1200px;
+		width: 26%;
+		background-color: #000;
+	}
+	.left img{
+		float: left;
+		width: 100%;
+		height: 600px;
+		margin:0;
+
+	}
+	.center{
+		float: left;
+		height: 1200px;
+		width: 48%;
+	}
+	.right{
+		float: left;
+		height: 1200px;
+		width: 26%;
+		background-color: #000;
+	}
+	.right img{
+		float: left;
+		width: 100%;
+		height: 600px;
+		margin:0;
+	}
+	.content{
+		width: 600px;
+		height: 1200px;
+		margin:0 auto;
+		background-color: #000;
+		color:#fff;
+	}
+	.content img{
+		width: 600px;
+		height: 600px;
+		margin:0 auto;
+	}
+
+	.contact{
+		height: 50px;
+		width: 600px;
+		color:#fff;
+		font-size: 20px;
+	}
+	.foot{
+		margin:0px auto 0;
+		height: 50px;
+		background-color: #000;
+		color:#fff;
+		text-align: center;
+		line-height: 50px;
+		font-size: 25px;
+	}
+</style>
+
+<body>
+	<div class="header">
+		恭贺安保祥达成最强王者成就！
+	</div>
+
+	<div class="main_con  clearfix">
+		<div class="left">
+			<img src="/static/images/an4.jpg" alt="">
+			<img src="/static/images/an3.jpg" alt="">
+		</div>
+		<div class="center clearfix">
+			<div class="content">
+				<img src="/static/media/{{worker.wpic}}" alt="">
+                <b>简单介绍下我自己：{{worker.wname}}</b>
+				<b>也可以叫我外号：{{worker.wchuohao}}</b><br>
+                {%if worker.wdanshen == True%}
+				<b>是否单身：佳人待宠</b><br>
+                {%else%}
+                <b>是否单身：名花有主</b><br>
+                {%endif%}
+				<b>兴趣爱好：{{worker.whobby}}</b><br>
+				<b>个人简介：</b>
+				<br>
+				<br>
+                {{worker.wjianjie|safe}}
+				<div class="contact">
+					<b>If you don't mind having another boyfriend,</b><br>
+					<b>please add my QQ 1564290026</b>
+				</div>
+			</div>
+
+
+		</div>
+		<div class="right">
+			<img src="/static/images/an2.jpg" alt="">
+			<img src="/static/images/an1.jpg" alt="">
+		</div>
+	</div>
+
+	<div class="foot">
+		If you want know me more
+		add my wechart loveyou1314donnan
+	</div>
+</body>
+</html>

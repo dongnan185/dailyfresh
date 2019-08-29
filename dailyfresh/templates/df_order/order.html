@@ -20,17 +20,12 @@
 		$('#total').val((total2+10).toFixed(2));
 
 		$('#order_btn').click(function() {
-			$('form')
-			$('form').submit();
-			localStorage.setItem('order_finish',2);
-
+			//localStorage.setItem('order_finish',2);
 			$('.popup_con').fadeIn('fast', function() {
-
 				setTimeout(function(){
 					$('.popup_con').fadeOut('fast',function(){
-						window.location.href = '/order/order_handle/';
 					});
-				},3000)
+				},2000)
 
 			});
 
@@ -100,9 +95,9 @@
 	<form method="post" action="/order/order_handle/" id="order_form">
 		{%csrf_token%}
 	<div class="order_submit clearfix">
-		<input  id="total">
-		<input  id="cart_ids" value="{{cart_ids}}">
-		<a href="document:order_form.submit()" id="order_btn">提交订单</a>
+		<input type="hidden"  id="total" name="total" value="">
+		<input  type="hidden" name="cart_ids"  id="cart_ids" value="{{cart_ids}}">
+		<input type="submit" value="提交订单" class="order_btn">
 	</div>
 	</form>
 

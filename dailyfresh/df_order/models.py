@@ -1,3 +1,4 @@
+#coding=utf-8
 from django.db import models
 
 class OrderInfo(models.Model):
@@ -7,6 +8,7 @@ class OrderInfo(models.Model):
     oIsPay = models.BooleanField(default=False)
     ototal = models.DecimalField(max_digits=6,decimal_places=2,default='0.00')
     oaddress = models.CharField(max_length=100)
+
 
 class OrderDetailInfo(models.Model):
     goods = models.ForeignKey('df_goods.GoodsInfo')

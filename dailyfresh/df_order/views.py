@@ -31,18 +31,18 @@ def order(request):
 def order_handle(request):
     tran_id = transaction.savepoint()
     #接受购物车编号
-    cart_ids = request.POST.get('cart_ids')
-    print '%s' %cart_ids;
+    cart_ids = request.POST.get('cart_ids','1,2')
+    print '%s' %cart_ids
     try:
         #创建订单对象
         order = OrderInfo()
         now = datetime.now()
         uid = request.session['user_id']
-        order.id = '%s%d'%(now.strftime('%Y%m%d%H%M%S'),uid)
+        order.oid = '%s%d'%(now.strftime('%Y%m%d%H%M%S'),uid)
         order.user_id = uid
         order.odate = now
 
-        order.ototal = Decimal(request.POST.get('total'))
+        order.ototal = Decimal(request.POST.get('total','20.00'))
         order.save()
         #创建订单对象
         cart_ids1 = [int(item) for item in cart_ids.split(',')]
@@ -73,14 +73,18 @@ def order_handle(request):
         print '================%s'%e
         transaction.savepoint_rollback(tran_id)
 
-    return redirect('/user/order/')
+    return redirect('/user/order1/')
 
 @user_decorator.login
 def pay(request,oid):
     order = OrderInfo.objects.get(oid=oid)
     order.IsPay = True
     order.save()
-    context = {'order':order}
+    context = {
+        'order':order,
+        'title':'支付',
+        'page_name':1,
+    }
     return render(request,'df_order/pay.html',context)
 
 

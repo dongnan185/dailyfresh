@@ -25,7 +25,7 @@ SECRET_KEY = 'cb4+ddlud=@1)m!&-k&h%$g^#_fwj!p7agh2=iv*4m52498o*v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['192.168.232.121']
 
 
 # Application definition
@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'df_cart',
     'df_order',
     'haystack',
+    'df_work',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -441,7 +441,7 @@ html,body{height:100%}
 .total_goods_count em,.total_goods_count b,.transit b,.total_pay b{font-size:14px;color:#ff4200;padding:0 5px;}
 
 .order_submit{width:1200px;margin:20px auto;}
-.order_submit a{width:160px;height:40px;line-height:40px;text-align:center;background-color:#47aa34;color:#fff;font-size:16px;display:block;float:right}
+.order_submit .order_btn{width:160px;height:40px;line-height:40px;text-align:center;background-color:#47aa34;color:#fff;font-size:16px;display:block;float:right}
 
 
 .order_list_th{width:1198px;border:1px solid #ddd;background-color:#f7f7f7;margin:20px auto 0;}

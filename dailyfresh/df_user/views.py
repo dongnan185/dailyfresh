@@ -4,6 +4,8 @@ from django.http import JsonResponse,HttpResponseRedirect,HttpResponse
 from hashlib import sha1
 from models import *
 from df_goods.models import GoodsInfo
+from df_order.models import OrderInfo,OrderDetailInfo
+from django.core.paginator import Paginator
 import user_decorator
 
 
@@ -101,8 +103,38 @@ def info(request):
     return render(request,'df_user/user_center_info.html',context)
 
 @user_decorator.login
-def order(request):
-    context = {'title':'用户中心','page_name':1}
+def order(request,pindex):
+    uid = request.session['user_id']
+    order_info = OrderInfo.objects.filter(user_id=int(uid)).order_by('-oid')
+    order_list = []
+    for order in order_info:
+        order_details = []
+        details = order.orderdetailinfo_set.order_by('id')[:]
+        detail_goods = []
+        for detail in details:
+            goods=[]
+            good = GoodsInfo.objects.filter(id=int(detail.goods_id))[0]
+            gtitle = good.gtitle
+            gunit = good.gunit
+            gpic = good.gpic
+            dcount = detail.count
+            dprice = detail.price
+            goods.append(gtitle)
+            goods.append(gunit)
+            goods.append(gpic)
+            goods.append(dcount)
+            goods.append(dprice)
+            detail_goods.append(goods)
+        order_details.append(order)
+        order_details.append(detail_goods)
+        order_list.append(order_details)
+
+    paginator = Paginator(order_list, 2)
+    page = paginator.page(int(pindex))
+    context = {
+        'title':'用户中心','page_name':1,
+        'page':page,'paginator':paginator,
+    }
     return render(request,'df_user/user_center_order.html',context)
 
 @user_decorator.login
