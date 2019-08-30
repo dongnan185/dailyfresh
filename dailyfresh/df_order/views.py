@@ -77,11 +77,10 @@ def order_handle(request):
 
 @user_decorator.login
 def pay(request,oid):
-    order = OrderInfo.objects.get(oid=oid)
-    order.IsPay = True
+    order= OrderInfo.objects.get(oid=oid)
+    order.oIsPay=True
     order.save()
     context = {
-        'order':order,
         'title':'支付',
         'page_name':1,
     }
